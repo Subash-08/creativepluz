@@ -3,7 +3,7 @@ import { StaticImageData } from 'next/image';
 
 export interface Brand {
     name: string;
-    logo: ReactNode | StaticImageData;
+    logo: ReactNode;
 }
 
 export interface TrustedBySectionProps {

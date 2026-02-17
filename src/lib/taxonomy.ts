@@ -13,7 +13,7 @@ export const SERVICE_TAXONOMY = {
     },
     packaging: {
         name: "Product Package Designing",
-        slug: "/services/package-design",
+        slug: "/services/product-package-design",
         description: "Structural packaging design and retail product branding",
         keywords: ["packaging design", "product packaging", "label design", "retail branding"],
         icon: "Box"

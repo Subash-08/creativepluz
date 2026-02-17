@@ -30,7 +30,7 @@ export default function FAQSection({ faqs }: FAQSectionProps) {
                     Common questions about working with Creative Pluz
                 </p>
 
-                <div className="max-w-3xl mx-auto divide-y rounded-2xl overflow-hidden animate-on-scroll" style={{ borderColor: THEME.colors.border, borderWidth: '1px', divideColor: THEME.colors.border }}>
+                <div className="max-w-3xl mx-auto divide-y rounded-2xl overflow-hidden animate-on-scroll" style={{ borderColor: THEME.colors.border, borderWidth: '1px' }}>
                     {faqs.map((faq, index) => {
                         const isOpen = activeIndex === index;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { MarqueeProps } from './types';
 import { useMemo } from 'react';
 
@@ -14,7 +14,7 @@ import { useMemo } from 'react';
  */
 export function Marquee({ children, speed = 30, className = "" }: MarqueeProps) {
     // Use strings for consistent animation values
-    const animationVariants = {
+    const animationVariants: Variants = {
         animate: {
             x: ["0%", "-50%"],
             transition: {

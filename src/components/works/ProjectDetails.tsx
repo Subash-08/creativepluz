@@ -37,7 +37,7 @@ interface ProjectProps {
     solution?: string[] | string;
 
     processSteps?: Array<{ title: string; description: string; _id?: string }>;
-    galleryImages?: Array<{ url: string; alt?: string; _id?: string }>;
+    galleryImages?: Array<{ url: string; alt?: string; _id?: string; width?: number; height?: number; aspectRatio?: string }>;
     techStack?: Array<{ name: string; _id: string }>;
     metrics?: Array<{ value: string; label: string }>;
     testimonial?: { quote: string; author: string; role?: string; image?: string };

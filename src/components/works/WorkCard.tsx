@@ -17,9 +17,7 @@ export default function WorkCard({ project }: WorkCardProps) {
     const categoryName =
         typeof project.categoryId === 'object'
             ? (project.categoryId as any).name
-            : typeof project.category === 'object'
-                ? (project.category as any).name
-                : 'Work';
+            : 'Work';
 
     return (
 

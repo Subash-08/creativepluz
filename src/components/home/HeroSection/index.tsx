@@ -14,7 +14,7 @@ const SERVICES: ServiceType[] = [
         image: "/assets/images/home/2.avif"
     },
     {
-        id: "package-design",
+        id: "product-package-design",
         title: "Product Package Designing",
         description: "Creating impactful packaging that stands out on the shelf and enhances the unboxing experience.",
         image: "/assets/images/home/7.avif"

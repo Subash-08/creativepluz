@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
 
     const serviceLinks = [
         { name: 'Logo & Branding', path: '/services/branding' },
-        { name: 'Product Package Designing', path: '/services/package-design' },
+        { name: 'Product Package Designing', path: '/services/product-package-design' },
         { name: 'Social Media Post', path: '/services/social-media-post' },
         { name: 'Banner Designs & Corporate Display', path: '/services/flex-banner-corporate-display' },
         { name: 'Brochure & Print Advertising', path: '/services/brochure-print-advertising' },
