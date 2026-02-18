@@ -213,11 +213,21 @@ const Navbar: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 bg-brand-dark flex flex-col"
+                        className="fixed inset-0 z-50 bg-black flex flex-col"
                     >
                         {/* Mobile Menu Content (Same as your original code) */}
                         <div className="flex justify-between items-center px-6 py-8 border-b border-white/5">
-                            <span className="text-white font-mono text-[10px] tracking-[0.4em] uppercase">Creative<span className="text-brand-primary">Pluz</span></span>
+                            <Link href="/" className="group relative z-50 flex items-center">
+                                <div className="relative w-[140px] h-[50px]">
+                                    <Image
+                                        src={logoImage}
+                                        alt="CreativePluz Logo"
+                                        fill
+                                        className="object-contain object-left transition-transform duration-300 group-hover:scale-105"
+                                        priority
+                                    />
+                                </div>
+                            </Link>
                             <button
                                 onClick={() => setIsOpen(false)}
                                 className="text-white hover:text-brand-primary transition-colors text-[10px] font-black uppercase tracking-widest"
