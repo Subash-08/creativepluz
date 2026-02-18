@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
     function middleware(req) {
-        console.log('[Middleware] Request:', req.nextUrl.pathname);
-        // Security Headers
+        // console.log('[Middleware] Request:', req.nextUrl.pathname);
         const response = NextResponse.next();
         response.headers.set("X-Frame-Options", "DENY");
         response.headers.set("X-Content-Type-Options", "nosniff");
@@ -12,7 +11,7 @@ export default withAuth(
 
         const token = req.nextauth.token;
         const isAuth = !!token;
-        const isAuthPage = req.nextUrl.pathname.startsWith("/admin/login");
+        const isAuthPage = req.nextUrl.pathname.startsWith("/login");
 
         if (isAuthPage) {
             if (isAuth) {
@@ -23,7 +22,6 @@ export default withAuth(
 
         if (
             req.nextUrl.pathname.startsWith("/admin") &&
-            req.nextUrl.pathname !== "/admin/login" &&
             token?.role !== "admin" &&
             token?.role !== "editor"
         ) {
@@ -37,20 +35,25 @@ export default withAuth(
             authorized: ({ req, token }) => {
                 const path = req.nextUrl.pathname;
 
-                // Allow access to login page
-                if (path.startsWith("/admin/login")) {
+                // Allow access to login/register pages
+                if (path.startsWith("/login") || path.startsWith("/register")) {
                     return true;
                 }
 
-                // Public routes (everything not starting with /admin or /dashboard)
-                if (!path.startsWith("/admin") && !path.startsWith("/dashboard")) {
+                // Public routes (everything not starting with /admin and not /dashboard)
+                if (!path.startsWith("/admin")) {
+                    // If accessing dashboard directly, require auth
+                    if (path.startsWith("/dashboard")) return !!token;
                     return true;
                 }
 
-                // Protected routes require token
+                // Protected /admin routes require token
                 return !!token;
             },
         },
+        pages: {
+            signIn: "/login",
+        }
     }
 );
 

@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import NextTopLoader from 'nextjs-toploader';
 import AuthProvider from '@/components/providers/AuthProvider';
 import { inter, outfit } from '@/lib/fonts';
@@ -33,10 +31,8 @@ export default function RootLayout({
             >
                 <AuthProvider>
                     <NextTopLoader color="#ffd700" showSpinner={false} />
-                    <Navbar />
                     {children}
                 </AuthProvider>
-                <Footer />
             </body>
         </html>
     );
