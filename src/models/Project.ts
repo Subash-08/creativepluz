@@ -173,10 +173,7 @@ const ProjectSchema: Schema = new Schema({
     status: { type: String, enum: ['draft', 'published', 'archived'], default: 'draft', index: true },
 }, { timestamps: true });
 
-// Prevent overwrite error for hot reloads
-if (process.env.NODE_ENV === 'development') {
-    delete mongoose.models.Project;
-}
+
 const Project: Model<IProject> = mongoose.models.Project || mongoose.model<IProject>('Project', ProjectSchema);
 
 export default Project;
