@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from '@/models/Project';
 import Category from '@/models/Category';
-import dbConnect from '@/lib/db';
+import dbConnect from '@/lib/dbConnect';
 import Link from 'next/link';
 
 export default async function AdminDashboardPage() {

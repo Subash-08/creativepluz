@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import connectToDB from '@/lib/db';
+import connectToDB from '@/lib/dbConnect';
 import PortfolioLayoutBox from '@/models/PortfolioLayoutBox';
 import Project from '@/models/Project';
 

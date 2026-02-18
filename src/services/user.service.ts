@@ -1,5 +1,5 @@
 import User, { IUser } from "@/models/User";
-import dbConnect from "@/lib/db";
+import dbConnect from "@/lib/dbConnect";
 
 export async function getUsers() {
     await dbConnect();

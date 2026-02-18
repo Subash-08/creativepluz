@@ -15,7 +15,7 @@ export default function AdminRootLayout({
     return (
         <div className="flex h-screen bg-gray-50 text-gray-900">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto relative">
+            <main className="flex-1 p-6 overflow-y-auto relative">
                 {children}
             </main>
         </div>

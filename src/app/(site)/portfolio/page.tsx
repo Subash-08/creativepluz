@@ -2,7 +2,7 @@ import { getPortfolioProjects } from '@/lib/data/project.queries';
 import Container from '@/components/layout/Container';
 import PortfolioContainer from '@/components/works/PortfolioContainer';
 import { Metadata } from 'next';
-import connectToDB from '@/lib/db';
+import connectToDB from '@/lib/dbConnect';
 import Category from '@/models/Category';
 
 export const metadata: Metadata = {

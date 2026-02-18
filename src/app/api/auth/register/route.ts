@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { registerSchema } from "@/validations/auth.schema";
-import dbConnect from "@/lib/db";
+import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 
 export async function POST(req: Request) {

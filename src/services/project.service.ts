@@ -1,5 +1,5 @@
 import Project from '@/models/Project';
-import dbConnect from '@/lib/db';
+import dbConnect from '@/lib/dbConnect';
 
 export async function getProjects() {
     await dbConnect();

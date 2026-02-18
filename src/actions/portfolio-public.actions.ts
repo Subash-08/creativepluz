@@ -1,6 +1,6 @@
 'use server';
 
-import connectToDB from '@/lib/db';
+import connectToDB from '@/lib/dbConnect';
 import Project from '@/models/Project';
 
 export async function getProjectsByCategory(categoryId: string) {
