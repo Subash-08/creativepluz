@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectToDB from '@/lib/db';
 import PortfolioLayoutBox from '@/models/PortfolioLayoutBox';
 import Project from '@/models/Project';
+import Category from '@/models/Category'; // Register Category model
 
 // Types for the sanitized response
 interface SanitizedProject {
@@ -89,8 +90,8 @@ export async function GET() {
         }
 
         return NextResponse.json({ boxes: sanitizedBoxes });
-    } catch (error) {
-        console.error('Error fetching portfolio layout:', error);
-        return NextResponse.json({ error: 'Failed to fetch layout' }, { status: 500 });
+    } catch (error: any) {
+        console.error('Error fetching portfolio layout:', error?.message, error?.stack);
+        return NextResponse.json({ error: 'Failed to fetch layout', details: error?.message }, { status: 500 });
     }
 }
