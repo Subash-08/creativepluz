@@ -17,7 +17,9 @@ import CallToAction from '@/components/home/CallToAction';
 export const revalidate = 60; // ISR
 
 export default async function HomePage() {
+    console.log('[HomePage] Rendering...');
     const featuredProjects = await getFeaturedProjects();
+    console.log('[HomePage] Projects fetched:', featuredProjects?.length);
 
     return (
         <main style={{ backgroundColor: THEME.colors.background, color: THEME.colors.foreground, minHeight: '100vh' }}>
