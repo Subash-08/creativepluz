@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpRight, Users } from 'lucide-react';
-import { FadeInRight } from '@/app/services/branding/ui/Animation.client';
+import { FadeInRight } from '@/app/(site)/services/branding/ui/Animation.client';
 
 export default function HeroContent() {
     return (
