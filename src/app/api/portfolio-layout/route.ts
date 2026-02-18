@@ -24,33 +24,38 @@ export async function GET() {
         await connectToDB();
 
         // Fetch all boxes sorted by order
-        const boxes = await PortfolioLayoutBox.find()
-            .sort({ order: 1 })
-            .populate({
-                path: 'projectId',
-                populate: { path: 'categoryId' } // Allow WorkCard to show category name
-            });
+        const boxes = await PortfolioLayoutBox.find().sort({ order: 1 }).lean();
+
+        // Extract project IDs
+        const projectIds = boxes
+            .map((box: any) => box.projectId)
+            .filter((id: any) => id); // Filter out nulls
+
+        // Fetch valid projects manually
+        // This avoids "Schema hasn't been registered for model 'Project'" error
+        // because we use the imported Project model directly.
+        const projects = await Project.find({ _id: { $in: projectIds } })
+            .select('title slug coverImage categoryId')
+            .populate('categoryId', 'name') // Populate Category (we know this works or is less critical)
+            .lean();
+
+        // Create a lookup map for efficiency
+        const projectMap = new Map(projects.map((p: any) => [p._id.toString(), p]));
 
         // Sanitize and transform the data
-        const sanitizedBoxes: SanitizedBox[] = boxes.map((box) => {
+        const sanitizedBoxes: SanitizedBox[] = boxes.map((box: any) => {
             let projectData: SanitizedProject | null = null;
 
             if (box.projectId) {
-                // If projectId is populated but is null (deleted project), it will be null here
-                // However, Mongoose populate sometimes returns nothing if ref is missing
-                // We should check if box.projectId has _id to confirm it's a document
-                const projectDoc = box.projectId as any;
+                const projectDoc = projectMap.get(box.projectId.toString());
 
-                if (projectDoc._id) {
+                if (projectDoc) {
                     projectData = {
                         id: projectDoc._id.toString(),
                         title: projectDoc.title,
-                        thumbnail: projectDoc.coverImage?.url || null, // Assuming coverImage structure
+                        thumbnail: projectDoc.coverImage?.url || null,
                         slug: projectDoc.slug,
-                        category: projectDoc.categoryId || null // Assuming categoryId is populated or is an object?
-                        // Wait, if categoryId is a ref, we need to populate it too in the main query?
-                        // "populate('projectId')" might not populate 'projectId.categoryId'.
-                        // We need nested populate: .populate({ path: 'projectId', populate: { path: 'categoryId' } })
+                        category: projectDoc.categoryId || null
                     };
                 }
             }
@@ -62,11 +67,7 @@ export async function GET() {
             };
         });
 
-        // Lazy Integrity Check: Ensure sequential order [1, 2, 3...]
-        // If we find a gap, we should ideally fix it. 
-        // For now, we'll just log it or maybe assume the frontend handles distinct orders?
-        // The plan said "Integrity: Call validateLayoutIntegrity() (lazy fix) if gaps detected."
-        // We will implement a simple inline check for now to re-sequence if needed.
+        // Lazy Integrity Check
         let needsResequencing = false;
         for (let i = 0; i < sanitizedBoxes.length; i++) {
             if (sanitizedBoxes[i].order !== i + 1) {
@@ -77,10 +78,6 @@ export async function GET() {
 
         if (needsResequencing && sanitizedBoxes.length > 0) {
             console.warn('Portfolio Layout integrity issue detected. Resequencing...');
-            // We can trigger a background fix or just fix in memory?
-            // To be safe and persistent, we should fix in DB.
-            // WE WONT BLOCK the response for this, but we should fire and forget or await if critical.
-            // Let's await to be safe.
             for (let i = 0; i < boxes.length; i++) {
                 if (boxes[i].order !== i + 1) {
                     await PortfolioLayoutBox.findByIdAndUpdate(boxes[i]._id, { order: i + 1 });
